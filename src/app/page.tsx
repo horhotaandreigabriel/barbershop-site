@@ -205,7 +205,7 @@ export default function Home() {
       <footer className="border-t border-line/80 bg-surface/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-muted md:flex-row md:items-center md:justify-between md:px-6">
           <p>{siteData.brand}</p>
-          <p>Dummy content pentru validare design. Datele reale se inlocuiesc rapid.</p>
+          <p>Dummy content pentru validare design. Datele reale se inlocuiesc rapid. Test schimbare locala.</p>
         </div>
       </footer>
     </div>
