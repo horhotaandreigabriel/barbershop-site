@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Urban Edge Barbershop
 
-## Getting Started
+Site Next.js pentru prezentare + mini-admin de servicii dinamic prin Firebase Firestore.
 
-First, run the development server:
+## 1. Instalare
+
+```bash
+npm install
+```
+
+## 2. Configurare `.env.local`
+
+```bash
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_WEB_API_KEY=AIza...
+FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+FIREBASE_APP_ID=1:1234567890:web:abc123
+FIREBASE_STORAGE_BUCKET=your-project-id.firebasestorage.app
+FIREBASE_MESSAGING_SENDER_ID=1234567890
+
+# Optional (recomandat in productie)
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+
+ADMIN_PASSWORD=schimba-ma-cu-o-parola-puternica
+ADMIN_SESSION_SECRET=schimba-ma-cu-un-secret-lung-random
+```
+
+Configul Web vine din `firebase apps:sdkconfig WEB ...`.
+Cheile de Service Account vin din Firebase Console -> Project settings -> Service accounts.
+
+## 3. Ruleaza local
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Site public: `http://localhost:3000`  
+Mini-admin: `http://localhost:3000/admin`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 4. Colectia Firestore
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Creeaza colectia `services`.
+- Documentele contin campurile:
+  - `name` (string)
+  - `slug` (string)
+  - `duration` (string)
+  - `price` (string)
+  - `description` (string)
+  - `longDescription` (string)
+  - `recommendedFor` (string)
+  - `includes` (array de string)
 
-## Learn More
+Mini-admin-ul poate crea aceste documente direct, deci poti porni si cu colectie goala.
 
-To learn more about Next.js, take a look at the following resources:
+- Formularul de contact salveaza in colectia `contactMessages` cu campurile:
+  - `name` (string)
+  - `phone` (string)
+  - `message` (string)
+  - `status` (`new` | `in_progress` | `resolved`)
+  - `createdAt` (ISO string)
+  - `updatedAt` (ISO string)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Note
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Daca Firebase nu e configurat, site-ul public cade automat pe datele statice din `src/data/site-data.ts`.
+- Daca exista `FIREBASE_PROJECT_ID` + `FIREBASE_WEB_API_KEY`, site-ul foloseste Firestore direct (REST fallback), chiar fara Service Account.
+- Autentificarea din `/admin` este simpla (parola din env + cookie HTTP-only semnat).

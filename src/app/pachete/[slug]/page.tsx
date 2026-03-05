@@ -1,21 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getServiceBySlug, siteData } from "@/data/site-data";
+import { siteData } from "@/data/site-data";
+import { getPublicServiceBySlug } from "@/lib/services";
 
 type ServiceDetailsPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return siteData.services.map((service) => ({ slug: service.slug }));
-}
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
-export async function generateMetadata({
-  params,
-}: ServiceDetailsPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: ServiceDetailsPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getPublicServiceBySlug(slug);
 
   if (!service) {
     return {
@@ -31,7 +29,7 @@ export async function generateMetadata({
 
 export default async function ServiceDetailsPage({ params }: ServiceDetailsPageProps) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getPublicServiceBySlug(slug);
 
   if (!service) {
     notFound();

@@ -1,6 +1,8 @@
 import { siteData } from "@/data/site-data";
 import TestimonialsSlider from "@/components/testimonials-slider";
+import ContactForm from "@/components/contact-form";
 import Link from "next/link";
+import { getPublicServices } from "@/lib/services";
 
 const navItems = [
   { label: "Servicii", href: "#servicii" },
@@ -10,7 +12,12 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Home() {
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const services = await getPublicServices();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-line/70 bg-background/90 backdrop-blur">
@@ -86,8 +93,8 @@ export default function Home() {
           <p className="text-xs uppercase tracking-[0.2em] text-muted">Servicii si preturi</p>
           <h2 className="mt-3 font-heading text-5xl uppercase tracking-[0.06em] md:text-6xl">Alege pachetul potrivit</h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {siteData.services.map((service) => (
-              <article key={service.name} className="rounded-3xl border border-line bg-surface p-5 transition hover:border-accent">
+            {services.map((service) => (
+              <article key={service.slug} className="rounded-3xl border border-line bg-surface p-5 transition hover:border-accent">
                 <div className="flex items-center justify-between">
                   <h3 className="font-heading text-3xl uppercase tracking-wide">{service.name}</h3>
                   <span className="text-sm font-semibold text-accent">{service.price}</span>
@@ -162,42 +169,7 @@ export default function Home() {
                 Placeholder harta Google Maps (se inlocuieste cu embed real la livrarea finala).
               </div>
             </article>
-            <form className="rounded-3xl border border-line bg-surface p-6">
-              <p className="text-sm text-foreground/80">Trimite un mesaj rapid:</p>
-              <label className="mt-4 block text-xs uppercase tracking-[0.16em] text-muted" htmlFor="name">
-                Nume
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Nume complet"
-                className="mt-2 w-full rounded-2xl border border-line bg-background px-4 py-3 text-sm outline-none transition focus:border-accent"
-              />
-              <label className="mt-4 block text-xs uppercase tracking-[0.16em] text-muted" htmlFor="phone">
-                Telefon
-              </label>
-              <input
-                id="phone"
-                type="tel"
-                placeholder="07xx xxx xxx"
-                className="mt-2 w-full rounded-2xl border border-line bg-background px-4 py-3 text-sm outline-none transition focus:border-accent"
-              />
-              <label className="mt-4 block text-xs uppercase tracking-[0.16em] text-muted" htmlFor="message">
-                Mesaj
-              </label>
-              <textarea
-                id="message"
-                placeholder="Spune-ne ce serviciu doresti."
-                rows={4}
-                className="mt-2 w-full resize-none rounded-2xl border border-line bg-background px-4 py-3 text-sm outline-none transition focus:border-accent"
-              />
-              <button
-                type="button"
-                className="mt-5 w-full rounded-full border border-accent bg-accent px-6 py-3 text-sm font-extrabold tracking-[0.14em] text-black transition hover:bg-transparent hover:text-accent"
-              >
-                TRIMITE
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </section>
       </main>
