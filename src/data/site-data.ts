@@ -1,8 +1,12 @@
 export type Service = {
+  slug: string;
   name: string;
   duration: string;
   price: string;
   description: string;
+  longDescription: string;
+  includes: string[];
+  recommendedFor: string;
 };
 
 export type Barber = {
@@ -37,40 +41,94 @@ export const siteData = {
   },
   services: [
     {
+      slug: "tuns-classic",
       name: "Tuns Classic",
       duration: "35 min",
       price: "80 RON",
       description: "Consultanta rapida, tuns precis si styling de final.",
+      longDescription:
+        "Pachetul ideal pentru un look curat si echilibrat. Incepem cu o consultanta rapida, continuam cu tunsul adaptat formei fetei si terminam cu styling pentru rezultat natural.",
+      includes: [
+        "Consultanta scurta de stil",
+        "Tuns personalizat pe forma fetei",
+        "Finisare si styling cu produse premium",
+      ],
+      recommendedFor: "Clienti care vor un refresh rapid si elegant.",
     },
     {
+      slug: "skin-fade",
       name: "Skin Fade",
       duration: "45 min",
       price: "95 RON",
       description: "Degradare curata cu tranzitii fine si simetrie perfecta.",
+      longDescription:
+        "Pentru cei care vor un look modern si precis, acest pachet pune accent pe tranzitii curate si contur perfect. Este executat cu atentie pe fiecare zona pentru simetrie impecabila.",
+      includes: [
+        "Analiza liniei naturale a parului",
+        "Skin fade in trepte fine",
+        "Contur detaliat in jurul tamplelor si cefei",
+      ],
+      recommendedFor: "Clienti care prefera stil urban modern si linii clare.",
     },
     {
+      slug: "tuns-barba",
       name: "Tuns + Barba",
       duration: "60 min",
       price: "130 RON",
       description: "Pachet complet pentru look fresh si contur definit.",
+      longDescription:
+        "Un pachet complet pentru imagine impecabila. Combinam tunsul personalizat cu aranjarea barbii, astfel incat proportiile fetei sa fie echilibrate si aspectul sa fie premium.",
+      includes: [
+        "Tuns personalizat complet",
+        "Contur si uniformizare barba",
+        "Styling final pentru par si barba",
+      ],
+      recommendedFor: "Clienti care vor transformare completa intr-o singura sesiune.",
     },
     {
+      slug: "aranjat-barba",
       name: "Aranjat Barba",
       duration: "30 min",
       price: "65 RON",
       description: "Contur, uniformizare, prosop cald si finisare premium.",
+      longDescription:
+        "Un serviciu dedicat exclusiv barbii, cu focus pe forma, simetrie si textura. Include tehnici de grooming pentru un look matur, curat si usor de intretinut acasa.",
+      includes: [
+        "Definire contur barba",
+        "Uniformizare lungime",
+        "Prosop cald si finisare cu balsam/ulei",
+      ],
+      recommendedFor: "Clienti care tin la o barba ingrijita si definita.",
     },
     {
+      slug: "contur-rapid",
       name: "Contur Rapid",
       duration: "20 min",
       price: "45 RON",
       description: "Retus rapid pentru pastrarea formei intre tunsori.",
+      longDescription:
+        "Un serviciu express intre tunsorile complete. Refacem liniile principale si curatam zonele-cheie pentru ca look-ul sa ramana fresh pana la urmatoarea programare.",
+      includes: [
+        "Retus zona tample si ceafa",
+        "Curatare contur frontal",
+        "Finisare rapida pentru aspect curat",
+      ],
+      recommendedFor: "Clienti care vor sa mentina forma impecabila saptamanal.",
     },
     {
+      slug: "pachet-vip",
       name: "Pachet VIP",
       duration: "80 min",
       price: "170 RON",
       description: "Tuns, barba, spalare, masaj scalp si styling dedicat.",
+      longDescription:
+        "Experienta completa Urban Edge. Este pachetul premium in care combinam tehnica de barbering cu elemente de relaxare pentru un rezultat impecabil si o experienta de top.",
+      includes: [
+        "Tuns personalizat premium",
+        "Aranjat barba cu prosop cald",
+        "Spalare + masaj scalp + styling dedicat",
+      ],
+      recommendedFor: "Clienti care vor servicii complete si experienta premium.",
     },
   ] as Service[],
   barbers: [
@@ -156,3 +214,6 @@ export const siteData = {
     },
   ] as Testimonial[],
 };
+
+export const getServiceBySlug = (slug: string) =>
+  siteData.services.find((service) => service.slug === slug);

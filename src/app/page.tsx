@@ -1,5 +1,6 @@
 import { siteData } from "@/data/site-data";
 import TestimonialsSlider from "@/components/testimonials-slider";
+import Link from "next/link";
 
 const navItems = [
   { label: "Servicii", href: "#servicii" },
@@ -93,6 +94,12 @@ export default function Home() {
                 </div>
                 <p className="mt-3 text-sm text-muted">{service.duration}</p>
                 <p className="mt-3 text-sm text-foreground/80">{service.description}</p>
+                <Link
+                  href={`/pachete/${service.slug}`}
+                  className="mt-5 inline-flex rounded-full border border-accent px-4 py-2 text-xs font-bold tracking-[0.12em] text-accent transition hover:bg-accent hover:text-black"
+                >
+                  VEZI DETALII
+                </Link>
               </article>
             ))}
           </div>
