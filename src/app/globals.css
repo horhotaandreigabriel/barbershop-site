@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b0b;
+  --surface: #111111;
+  --foreground: #f6f2ea;
+  --muted: #b0a28d;
+  --line: #2b241a;
+  --accent: #c89c59;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+* {
+  border-color: var(--line);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+.grid-glow {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(200 156 89 / 18%) 0%, transparent 40%),
+    radial-gradient(circle at 80% 0%, rgb(200 156 89 / 15%) 0%, transparent 30%),
+    linear-gradient(135deg, #070707 0%, #12100d 45%, #17120c 100%);
+}
+
+.grain-overlay {
+  position: relative;
+}
+
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image: radial-gradient(rgb(255 255 255 / 12%) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+}
+
+.reveal-up {
+  animation: reveal-up 700ms ease-out both;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
